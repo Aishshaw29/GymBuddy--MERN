@@ -3,7 +3,6 @@
 A production-ready MERN stack application combining **fitness tracking** with **gym supplements e-commerce**, featuring role-based dashboards for Admin, Seller, and User roles.
 
 Perfect for:
-- 🎓 College final-year projects
 - 💼 Resume showcase
 - 👨‍💻 Interview discussions
 
