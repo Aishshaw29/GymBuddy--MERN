@@ -1,0 +1,184 @@
+@use '@angular/material' as mat;
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@include mat.core();
+
+// Define custom colors (Indigo & Teal for a sleek look)
+$gymbuddy-primary: mat.define-palette(mat.$indigo-palette, 600);
+$gymbuddy-accent: mat.define-palette(mat.$teal-palette, A400);
+$gymbuddy-warn: mat.define-palette(mat.$red-palette);
+
+// Create the dark theme
+$gymbuddy-theme: mat.define-dark-theme((
+  color: (
+    primary: $gymbuddy-primary,
+    accent: $gymbuddy-accent,
+    warn: $gymbuddy-warn,
+  ),
+  typography: mat.define-typography-config($font-family: '"Inter", sans-serif'),
+  density: 0
+));
+
+// Include all theme styles
+@include mat.all-component-themes($gymbuddy-theme);
+
+/* Global Styles */
+:root {
+  --dark-950: #020617;
+  --dark-900: #0f172a;
+  --dark-800: #1e293b;
+  --dark-700: #334155;
+  --glass-bg: rgba(15, 23, 42, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --primary-glow: rgba(14, 165, 233, 0.2);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: var(--dark-950);
+  color: #f8fafc;
+  font-family: 'Inter', sans-serif;
+  scroll-behavior: smooth;
+}
+
+/* Glassmorphism Classes */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+}
+
+.card-glow {
+  box-shadow: 0 0 20px var(--primary-glow);
+}
+
+/* Shared UI Utilities */
+.gradient-bg {
+  background: radial-gradient(circle at top left, #0f172a, #020617);
+  min-height: 100vh;
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #38bdf8, #22c55e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--dark-950);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--dark-700);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Material Component Overrides */
+.mat-mdc-card {
+  background: var(--dark-900) !important;
+  border: 1px solid var(--glass-border) !important;
+  color: #f8fafc !important;
+}
+
+.mat-mdc-table {
+  background: transparent !important;
+}
+
+/* Material Form Field Fixes for MDC & Tailwind Conflicts */
+.mat-mdc-form-field {
+  width: 100%;
+  margin-bottom: 4px;
+
+  /* Fix for vertical line in the middle of outline notch and near prefix icons */
+  .mdc-notched-outline__notch {
+    border-right: none !important;
+  }
+
+  /* Specific fix for the vertical line often appearing near prefix icons */
+  .mat-mdc-form-field-icon-prefix, 
+  .mat-mdc-form-field-prefix {
+    border-right: none !important;
+    border-left: none !important;
+    padding-right: 8px !important;
+  }
+
+  .mdc-line-ripple::before,
+  .mdc-line-ripple::after {
+    border-bottom: none !important;
+  }
+
+  /* Fix for overlapping labels when input is filled or focused */
+  &.mat-form-field-should-float .mdc-floating-label,
+  &.mat-focused .mdc-floating-label {
+    transform: translateY(-34px) scale(0.75) !important;
+    width: auto !important;
+    padding: 0 8px !important;
+    background: #0f172a !important; /* Force background to hide the notch line */
+    z-index: 5;
+    opacity: 1 !important;
+  }
+
+  /* Hide placeholder when label is not floating to prevent overlap */
+  &:not(.mat-form-field-should-float) .mdc-text-field__input::placeholder {
+    color: transparent !important;
+  }
+
+  /* Notch border styling */
+  .mdc-notched-outline__leading,
+  .mdc-notched-outline__notch,
+  .mdc-notched-outline__trailing {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    border-width: 1px !important;
+  }
+
+  &.mat-focused {
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: #38bdf8 !important;
+      border-width: 2px !important;
+    }
+    .mdc-floating-label {
+      color: #38bdf8 !important;
+    }
+  }
+
+  /* Error state borders */
+  &.mat-form-field-invalid {
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: #ef4444 !important;
+    }
+    .mdc-floating-label {
+      color: #ef4444 !important;
+    }
+  }
+}
+
+/* Fix for Material Inputs with Prefixes/Suffixes */
+.mat-mdc-text-field-wrapper {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+.mat-mdc-form-field .mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
+  display: inline-block !important;
+}
+
